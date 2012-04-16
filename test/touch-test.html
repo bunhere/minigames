@@ -102,7 +102,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
   <h3 id="timer">00:00:00</h3>
   <div>
   <div id="play" class="button orange">start without effects</div>
-  <div id="playWithEffects" class="button orange">start with effects</div>
+  <div id="playWithEffects" class="button orange">start<br> with effects</div>
   </div>
   <div class="touchpad">
   <div class="ball"></div>
@@ -129,6 +129,25 @@ $(function() {
         events = "touchstart";
     else
         events = "mouseup";
+    var eventArr = ["touchstart", "touchmove", "touchend", "mousedown", "mouseup", "mousemove", "click"];
+    var eventIDX= 0;
+    $("#title").text(eventArr[eventIDX] + " 5 times")
+        .live("click", function() {
+                $(".touchpad").die(eventArr[eventIDX]);
+                eventIDX++;
+                $(this).text(eventArr[eventIDX] + " 5 times");
+                $(".touchpad").live(eventArr[eventIDX], function(e) {
+                    if (effects) {
+                       balls.eq(numberOfTouch).css("visibility", "")
+                           .css("left", e.pageX-25)
+                           .css("top", e.pageY-25);
+                    }
+                    numberOfTouch++;
+                    if (numberOfTouch == 5) {
+                        window.alert("5 times " + eventArr[eventIDX]);
+                    }
+                });
+            });
 
     var balls = $(".ball");
     balls.css("visibility", "hidden");
@@ -145,17 +164,6 @@ $(function() {
         numberOfTouch=0;
         $(this).addClass("blue").removeClass("orange")
               .siblings().addClass("orange").removeClass("blue");
-    });
-    $(".touchpad").live(events, function(e) {
-        if (effects) {
-           balls.eq(numberOfTouch).css("visibility", "")
-               .css("left", e.pageX-25)
-               .css("top", e.pageY-25);
-        }
-        numberOfTouch++;
-        if (numberOfTouch == 5) {
-            window.alert("5 times " + events);
-        }
     });
 });
 </script>
