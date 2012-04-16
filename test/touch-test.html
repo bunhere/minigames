@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<script>
+var agent=navigator.userAgent.toLowerCase();
+var viewportTag=document.createElement('meta');
+viewportTag.id="viewport";
+viewportTag.name="viewport";
+
+var is_iphone = (agent.indexOf('iphone')!=-1); 
+if (is_iphone) {
+  viewportTag.content="width=480,initial-scale=0.67,maximum-scale=0.67,user-scalable=no";
+} else {
+  var scaleFactor=window.innerWidth/480;
+  viewportTag.content="width=480,initial-scale="+scaleFactor+",maximum-scale="+scaleFactor+",user-scalable=no,target-densityDpi=device-dpi";
+}
+document.getElementsByTagName('head')[0].appendChild(viewportTag);
+</script>
+<style type="text/css">
+body {
+    width: 480px;
+    text-align: center;
+    margin-left: 0px;
+    margin-top: 0px;
+}
+
+h1, p { margin: 0px; }
+
+.stage {
+width: 480px;
+height: 740px;
+background-color: #ccc;
+margin:0px;
+}
+
+.button, .button:visited {
+    display: inline-block;
+    padding: 10px 10px 10px;
+    margin: 3px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 2em;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+    position: relative;
+    cursor: pointer;
+    background-color: #2981e4;
+}
+
+.orange { 
+    width:200px;
+    padding: 3px 10px 5px;
+    margin-bottom: 20px;
+    background-color: #ff5c00;
+}
+.orange:hover { background-color: #d45500; }
+
+.blue { 
+    width:200px;
+    padding: 3px 10px 5px;
+    margin-bottom: 20px;
+    background-color: #0000ef;
+}
+.blue:hover { background-color: #0011d4; }
+
+.ball {
+    position: absolute;
+    background-color: #0000ef;
+    width: 50px;
+    height: 50px;
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+}
+
+.touchpad {
+width:100%;
+height:100%;
+background-color: #efefef;
+}
+</style>
+<title>touch-test</title>
+</head>
+<body>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-9901901217663101";
+/* 웹앱용배너 */
+google_ad_slot = "1527001345";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+<div class="stage">
+  <h1 id="title">touch 5 times</h1>
+  <h3 id="timer">00:00:00</h3>
+  <div>
+  <div id="play" class="button orange">start without effects</div>
+  <div id="playWithEffects" class="button orange">start with effects</div>
+  </div>
+  <div class="touchpad">
+  <div class="ball"></div>
+  <div class="ball"></div>
+  <div class="ball"></div>
+  <div class="ball"></div>
+  <div class="ball"></div>
+  </div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+$(function() {
+    // add new event shortcuts
+    $.each(( "touchstart touchmove touchend").split( " " ), function( i, name ) {
+        $.fn[ name ] = function( fn ) {
+            return fn ? this.bind( name, fn ) : this.trigger( name );
+        };
+
+        $.attrFn[ name ] = true;
+    });
+
+    var events;
+    if (navigator.userAgent.indexOf("mobile") > -1)
+        events = "touchstart";
+    else
+        events = "mouseup";
+
+    var balls = $(".ball");
+    balls.css("visibility", "hidden");
+    var effects = false;
+    var numberOfTouch = 0;
+    $("#play").live("click", function() {
+        effects = false;
+        numberOfTouch=0;
+        $(this).addClass("blue").removeClass("orange")
+              .siblings().addClass("orange").removeClass("blue");
+    });
+    $("#playWithEffects").live("click", function() {
+        effects = true;
+        numberOfTouch=0;
+        $(this).addClass("blue").removeClass("orange")
+              .siblings().addClass("orange").removeClass("blue");
+    });
+    $(".touchpad").live(events, function(e) {
+        if (effects) {
+           balls.eq(numberOfTouch).css("visibility", "")
+               .css("left", e.pageX-25)
+               .css("top", e.pageY-25);
+        }
+        numberOfTouch++;
+        if (numberOfTouch == 5) {
+            window.alert("5 times " + events);
+        }
+    });
+});
+</script>
+</body>
+</html>
