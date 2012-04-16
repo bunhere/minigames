@@ -98,6 +98,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 
 <div class="stage">
+  <br>
   <h1 id="title">touch 5 times</h1>
   <h3 id="timer">00:00:00</h3>
   <div>
@@ -136,13 +137,17 @@ $(function() {
         events = "mouseup";
     var eventArr = ["touchstart", "touchmove", "touchend", "mousedown", "mouseup", "mousemove", "click"];
     var eventIDX= 0;
-    $("#title").text(eventArr[eventIDX] + " 5 times")
+    function init() {
+        numberOfTouch=0;
+        balls.css("visibility", "hidden");
+    }
+    $("#title").text("[some events(click me)] 5 times")
         .live("click", function() {
                 $(".touchpad").die(eventArr[eventIDX]);
                 balls.css("visibility", "hidden");
                 eventIDX++;
                 $(this).text(eventArr[eventIDX] + " 5 times");
-                balls.css("visibility", "hidden");
+                init();
                 $("#play,#playWithEffects").removeClass("blue").addClass("orange");
                 $(".touchpad").live(eventArr[eventIDX], function(e) {
                     if (effects) {
@@ -159,17 +164,15 @@ $(function() {
 
     $("#play").live("click", function() {
         effects = false;
-        numberOfTouch=0;
+        init();
         $(this).addClass("blue").removeClass("orange")
               .siblings().addClass("orange").removeClass("blue");
-        balls.css("visibility", "hidden");
     });
     $("#playWithEffects").live("click", function() {
         effects = true;
-        numberOfTouch=0;
+        init();
         $(this).addClass("blue").removeClass("orange")
               .siblings().addClass("orange").removeClass("blue");
-        balls.css("visibility", "hidden");
     });
 });
 </script>
