@@ -124,6 +124,11 @@ $(function() {
         $.attrFn[ name ] = true;
     });
 
+    var balls = $(".ball");
+    balls.css("visibility", "hidden");
+    var effects = false;
+    var numberOfTouch = 0;
+
     var events;
     if (navigator.userAgent.indexOf("mobile") > -1)
         events = "touchstart";
@@ -134,8 +139,11 @@ $(function() {
     $("#title").text(eventArr[eventIDX] + " 5 times")
         .live("click", function() {
                 $(".touchpad").die(eventArr[eventIDX]);
+                balls.css("visibility", "hidden");
                 eventIDX++;
                 $(this).text(eventArr[eventIDX] + " 5 times");
+                balls.css("visibility", "hidden");
+                $("#play,#playWithEffects").removeClass("blue").addClass("orange");
                 $(".touchpad").live(eventArr[eventIDX], function(e) {
                     if (effects) {
                        balls.eq(numberOfTouch).css("visibility", "")
@@ -149,21 +157,19 @@ $(function() {
                 });
             });
 
-    var balls = $(".ball");
-    balls.css("visibility", "hidden");
-    var effects = false;
-    var numberOfTouch = 0;
     $("#play").live("click", function() {
         effects = false;
         numberOfTouch=0;
         $(this).addClass("blue").removeClass("orange")
               .siblings().addClass("orange").removeClass("blue");
+        balls.css("visibility", "hidden");
     });
     $("#playWithEffects").live("click", function() {
         effects = true;
         numberOfTouch=0;
         $(this).addClass("blue").removeClass("orange")
               .siblings().addClass("orange").removeClass("blue");
+        balls.css("visibility", "hidden");
     });
 });
 </script>
