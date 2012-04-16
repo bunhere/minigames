@@ -98,7 +98,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 
 <div class="stage">
-  <br>
+  <br/>
   <h1 id="title">touch 5 times</h1>
   <h3 id="timer">00:00:00</h3>
   <div>
@@ -145,7 +145,7 @@ $(function() {
         .live("click", function() {
                 $(".touchpad").die(eventArr[eventIDX]);
                 balls.css("visibility", "hidden");
-                eventIDX++;
+                eventIDX = (eventIDX+1) % 7;
                 $(this).text(eventArr[eventIDX] + " 5 times");
                 init();
                 $("#play,#playWithEffects").removeClass("blue").addClass("orange");
