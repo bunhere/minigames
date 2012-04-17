@@ -127,6 +127,7 @@ $(function() {
 
     var balls = $(".ball");
     balls.css("visibility", "hidden");
+
     var effects = false;
     var numberOfTouch = 0;
 
@@ -140,6 +141,7 @@ $(function() {
     function init() {
         numberOfTouch=0;
         balls.css("visibility", "hidden");
+        timerStarted = false;
     }
     $("#title").text("[some events(click me)] 5 times")
         .live("click", function() {
@@ -174,6 +176,36 @@ $(function() {
         $(this).addClass("blue").removeClass("orange")
               .siblings().addClass("orange").removeClass("blue");
     });
+
+    var startTime;
+    var $timer = $("#timer");
+    var timerStarted = false;
+    function stopWatch() {
+        var ms = new Date().getTime() - startTime.getTime();
+
+        var ts = parseInt(ms / 10);
+        var s = parseInt(ts / 100);
+        var m = parseInt(s / 60);
+        ts = ts - s * 100;
+        s = s - m * 60;
+        if (ts < 10) ts = "0" + ts;
+        if (s < 10) s = "0" + s;
+        if (m < 10) m = "0" + m;
+
+        $timer.text(m + ":" + s + "." + ts);
+        if (timerStarted)
+            setTimeout(stopWatch, 1000 / 60);
+    }
+    $timer.live("click", function() {
+        if (timerStarted) {
+            timerStarted = false;
+        } else {
+            startTime = new Date();
+            setTimeout(stopWatch, 1000 / 60);
+            timerStarted = true;
+        }
+    });
+
 });
 </script>
 </body>
