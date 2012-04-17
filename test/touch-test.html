@@ -9,7 +9,7 @@ viewportTag.name="viewport";
 
 var is_iphone = (agent.indexOf('iphone')!=-1); 
 if (is_iphone) {
-  viewportTag.content="width=480,initial-scale=0.67,maximum-scale=0.67,user-scalable=no";
+  viewportTag.content="width=480,initial-scale=0.67,maximum-scale=0.67,user-scalable=yes";
 } else {
   var scaleFactor=window.innerWidth/480;
   viewportTag.content="width=480,initial-scale="+scaleFactor+",maximum-scale="+scaleFactor+",user-scalable=no,target-densityDpi=device-dpi";
@@ -145,7 +145,7 @@ $(function() {
         timerStarted = false;
     }
     $("#title").text("[some events(click me)] 5 times")
-        .live("click", function() {
+        .live(events, function() {
                 $(".touchpad").die(eventArr[eventIDX]);
                 balls.css("visibility", "hidden");
                 eventIDX = (eventIDX+1) % 7;
