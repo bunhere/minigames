@@ -152,6 +152,7 @@ $(function() {
                 init();
                 $("#play,#playWithEffects").removeClass("blue").addClass("orange");
                 $(".touchpad").live(eventArr[eventIDX], function(e) {
+                    e.preventDefault();
                     if (effects) {
                        balls.eq(numberOfTouch).css("visibility", "")
                            .css("left", e.pageX-25)
