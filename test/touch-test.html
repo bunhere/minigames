@@ -8,7 +8,8 @@ viewportTag.id="viewport";
 viewportTag.name="viewport";
 
 var is_iphone = (agent.indexOf('iphone')!=-1); 
-if (is_iphone) {
+var is_ipad = (agent.indexOf('ipad')!=-1); 
+if (is_iphone || is_ipad) {
   viewportTag.content="width=480,initial-scale=0.67,maximum-scale=0.67,user-scalable=yes";
 } else {
   var scaleFactor=window.innerWidth/480;
