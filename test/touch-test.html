@@ -101,6 +101,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
   <br/>
   <h1 id="title">touch 5 times</h1>
   <h3 id="timer">00:00:00</h3>
+  (<h3 id="count">0</h3>)
   <div>
   <div id="play" class="button orange">start without effects</div>
   <div id="playWithEffects" class="button orange">start<br> with effects</div>
@@ -136,7 +137,7 @@ $(function() {
         events = "touchstart";
     else
         events = "mouseup";
-    var eventArr = ["touchstart", "touchmove", "touchend", "mousedown", "mouseup", "mousemove", "click"];
+    var eventArr = ["click", "touchstart", "touchmove", "touchend", "mousedown", "mouseup", "mousemove"];
     var eventIDX= 0;
     function init() {
         numberOfTouch=0;
@@ -161,7 +162,9 @@ $(function() {
                     numberOfTouch++;
                     if (numberOfTouch == 5) {
                         window.alert("5 times " + eventArr[eventIDX]);
+                        $("#count").text(0);
                     }
+                    $("#count").text(numberOfTouch);
                 });
             });
 
